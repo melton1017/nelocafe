@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nelo Cafe Digital Studio - Where Design Meets Luxury</title>
+    <meta name="description" content="Premium web design and digital solutions for luxury brands in South Africa. Crafting digital spaces that inspire and convert.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/splitting@1.0.6/dist/splitting.css">
+    <script src="https://unpkg.com/splitting@1.0.6/dist/splitting.min.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'warm-ivory': '#F8F6F0',
+                        'deep-charcoal': '#2C2C2C',
+                        'soft-taupe': '#A0927B',
+                        'champagne-gold': '#D4AF37',
+                        'sage-green': '#9CAF88'
+                    },
+                    fontFamily: {
+                        'display': ['Playfair Display', 'serif'],
+                        'body': ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Custom Styles */
+        .hero-bg {
+            background: linear-gradient(135deg, #F8F6F0 0%, #F0EDE5 100%);
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, #2C2C2C 0%, #A0927B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(44, 44, 44, 0.15);
+        }
+        
+        .btn-luxury {
+            background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-luxury:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
+        }
+        
+        .reveal-element {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .reveal-element.revealed {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        /* Navigation Styles */
+        .nav-blur {
+            backdrop-filter: blur(20px);
+            background: rgba(248, 246, 240, 0.9);
+        }
+        
+        /* Particle Canvas */
+        #particle-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        
+        /* Scroll Progress */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, #D4AF37, #B8941F);
+            z-index: 1000;
+            transition: width 0.1s ease;
+        }
+    </style>
+</head>
+<body class="bg-warm-ivory text-deep-charcoal font-body overflow-x-hidden">
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 nav-blur border-b border-soft-taupe/20">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="font-display font-semibold text-xl text-deep-charcoal">
+                    Nelo Cafe Digital Studio
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="nav-link text-deep-charcoal hover:text-champagne-gold transition-colors duration-300">Home</a>
+                    <a href="about.html" class="nav-link text-deep-charcoal hover:text-champagne-gold transition-colors duration-300">About</a>
+                    <a href="services.html" class="nav-link text-deep-charcoal hover:text-champagne-gold transition-colors duration-300">Services</a>
+                    <a href="portfolio.html" class="nav-link text-deep-charcoal hover:text-champagne-gold transition-colors duration-300">Portfolio</a>
+                    <a href="packages.html" class="nav-link text-deep-charcoal hover:text-champagne-gold transition-colors duration-300">Packages</a>
+                    <a href="contact.html" class="nav-link text-deep-charcoal hover:text-champagne-gold transition-colors duration-300">Contact</a>
+                </div>
+                <button class="md:hidden" id="mobile-menu-btn">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen hero-bg flex items-center">
+        <canvas id="particle-canvas"></canvas>
+        <div class="relative z-10 max-w-7xl mx-auto px-6 py-20">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <div class="space-y-4">
+                        <h1 class="font-display text-5xl lg:text-7xl font-bold text-gradient leading-tight">
+                            <span id="typed-text"></span>
+                        </h1>
+                        <p class="text-xl lg:text-2xl text-deep-charcoal/80 font-light leading-relaxed max-w-2xl">
+                            Crafting digital spaces that inspire. Premium web design and digital solutions for luxury brands in South Africa.
+                        </p>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="contact.html" class="btn-luxury text-white px-8 py-4 rounded-lg font-medium text-lg inline-flex items-center justify-center">
+                            Start Your Project
+                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
+                        <a href="portfolio.html" class="border-2 border-deep-charcoal text-deep-charcoal px-8 py-4 rounded-lg font-medium text-lg hover:bg-deep-charcoal hover:text-warm-ivory transition-all duration-300 inline-flex items-center justify-center">
+                            View Our Work
+                        </a>
+                    </div>
+                    <div class="flex items-center space-x-6 text-sm text-deep-charcoal/60">
+                        <span>📍 Polokwane, South Africa</span>
+                        <span>✨ 5+ Years Experience</span>
+                        <span>🏆 Premium Quality</span>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="aspect-square rounded-2xl overflow-hidden shadow-2xl">
+                        <img src="resources/hero-workspace.png" alt="Luxury Digital Studio Workspace" class="w-full h-full object-cover">
+                    </div>
+                    <div class="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl shadow-lg">
+                        <div class="text-center">
+                            <div class="text-2xl font-display font-bold text-champagne-gold">50+</div>
+                            <div class="text-sm text-deep-charcoal/60">Projects Delivered</div>
+                        </div>
+                    </div>
+                    <div class="absolute -top-6 -right-6 bg-deep-charcoal text-white p-6 rounded-xl shadow-lg">
+                        <div class="text-center">
+                            <div class="text-2xl font-display font-bold">98%</div>
+                            <div class="text-sm text-warm-ivory/80">Client Satisfaction</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Services Preview -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal-element">
+                <h2 class="font-display text-4xl lg:text-5xl font-bold text-deep-charcoal mb-6">
+                    Premium Digital Services
+                </h2>
+                <p class="text-xl text-deep-charcoal/70 max-w-3xl mx-auto">
+                    We specialize in creating luxurious digital experiences that elevate your brand and connect with your audience on a deeper level.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card-hover bg-warm-ivory p-8 rounded-2xl border border-soft-taupe/20 reveal-element">
+                    <div class="w-16 h-16 bg-champagne-gold/20 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-champagne-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-2xl font-semibold text-deep-charcoal mb-4">Website Design</h3>
+                    <p class="text-deep-charcoal/70 mb-6">Custom-built websites tailored to your brand, optimized for mobile, and designed for maximum impact.</p>
+                    <a href="services.html" class="text-champagne-gold font-medium hover:underline">Learn More →</a>
+                </div>
+                
+                <div class="card-hover bg-warm-ivory p-8 rounded-2xl border border-soft-taupe/20 reveal-element">
+                    <div class="w-16 h-16 bg-sage-green/20 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-sage-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-2xl font-semibold text-deep-charcoal mb-4">Branding & Identity</h3>
+                    <p class="text-deep-charcoal/70 mb-6">Logo design, brand color palettes, typography systems, and style guides to help your business stand out.</p>
+                    <a href="services.html" class="text-champagne-gold font-medium hover:underline">Learn More →</a>
+                </div>
+                
+                <div class="card-hover bg-warm-ivory p-8 rounded-2xl border border-soft-taupe/20 reveal-element">
+                    <div class="w-16 h-16 bg-champagne-gold/20 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-champagne-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-2xl font-semibold text-deep-charcoal mb-4">SEO & Marketing</h3>
+                    <p class="text-deep-charcoal/70 mb-6">Search engine optimization and marketing strategies to boost visibility and attract more clients.</p>
+                    <a href="services.html" class="text-champagne-gold font-medium hover:underline">Learn More →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Portfolio Highlights -->
+    <section class="py-20 bg-warm-ivory">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal-element">
+                <h2 class="font-display text-4xl lg:text-5xl font-bold text-deep-charcoal mb-6">
+                    Featured Projects
+                </h2>
+                <p class="text-xl text-deep-charcoal/70 max-w-3xl mx-auto">
+                    Discover how we've transformed businesses with our premium digital solutions, creating experiences that inspire and convert.
+                </p>
+            </div>
+            
+            <div class="splide" id="portfolio-slider">
+                <div class="splide__track">
+                    <ul class="splide__list">
+                        <li class="splide__slide">
+                            <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-lg">
+                                <div class="aspect-video overflow-hidden">
+                                    <img src="resources/salon-mockup.png" alt="LuxeStrands Salon Website" class="w-full h-full object-cover">
+                                </div>
+                                <div class="p-8">
+                                    <h3 class="font-display text-2xl font-semibold text-deep-charcoal mb-3">LuxeStrands Salon</h3>
+                                    <p class="text-deep-charcoal/70 mb-4">Premium hair salon website featuring elegant layout, service showcase, and online booking system.</p>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-champagne-gold font-medium">Beauty & Wellness</span>
+                                        <a href="portfolio.html" class="text-deep-charcoal hover:text-champagne-gold transition-colors">View Case Study →</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="splide__slide">
+                            <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-lg">
+                                <div class="aspect-video overflow-hidden">
+                                    <img src="resources/fashion-mockup.png" alt="Velora Boutique Website" class="w-full h-full object-cover">
+                                </div>
+                                <div class="p-8">
+                                    <h3 class="font-display text-2xl font-semibold text-deep-charcoal mb-3">Velora Boutique</h3>
+                                    <p class="text-deep-charcoal/70 mb-4">Fashion & lifestyle boutique with modern shopping experience and mobile-first design.</p>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-champagne-gold font-medium">Fashion & Retail</span>
+                                        <a href="portfolio.html" class="text-deep-charcoal hover:text-champagne-gold transition-colors">View Case Study →</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="splide__slide">
+                            <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-lg">
+                                <div class="aspect-video overflow-hidden">
+                                    <img src="resources/restaurant-mockup.png" alt="Maison Éclat Restaurant Website" class="w-full h-full object-cover">
+                                </div>
+                                <div class="p-8">
+                                    <h3 class="font-display text-2xl font-semibold text-deep-charcoal mb-3">Maison Éclat</h3>
+                                    <p class="text-deep-charcoal/70 mb-4">Fine dining restaurant website with reservation system and dynamic menu page.</p>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-champagne-gold font-medium">Hospitality</span>
+                                        <a href="portfolio.html" class="text-deep-charcoal hover:text-champagne-gold transition-colors">View Case Study →</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Statistics Section -->
+    <section class="py-20 bg-deep-charcoal text-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8 text-center">
+                <div class="reveal-element">
+                    <div class="text-4xl font-display font-bold text-champagne-gold mb-2" data-count="50">0</div>
+                    <div class="text-warm-ivory/80">Projects Completed</div>
+                </div>
+                <div class="reveal-element">
+                    <div class="text-4xl font-display font-bold text-champagne-gold mb-2" data-count="98">0</div>
+                    <div class="text-warm-ivory/80">Client Satisfaction %</div>
+                </div>
+                <div class="reveal-element">
+                    <div class="text-4xl font-display font-bold text-champagne-gold mb-2" data-count="5">0</div>
+                    <div class="text-warm-ivory/80">Years Experience</div>
+                </div>
+                <div class="reveal-element">
+                    <div class="text-4xl font-display font-bold text-champagne-gold mb-2" data-count="24">0</div>
+                    <div class="text-warm-ivory/80">Hour Support</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Call to Action -->
+    <section class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="reveal-element">
+                <h2 class="font-display text-4xl lg:text-5xl font-bold text-deep-charcoal mb-6">
+                    Ready to Elevate Your Brand?
+                </h2>
+                <p class="text-xl text-deep-charcoal/70 mb-8 max-w-2xl mx-auto">
+                    Let's create a digital experience that reflects the luxury and sophistication your brand deserves. Get in touch today to start your transformation.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="contact.html" class="btn-luxury text-white px-8 py-4 rounded-lg font-medium text-lg inline-flex items-center justify-center">
+                        Start Your Project
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                        </svg>
+                    </a>
+                    <a href="packages.html" class="border-2 border-deep-charcoal text-deep-charcoal px-8 py-4 rounded-lg font-medium text-lg hover:bg-deep-charcoal hover:text-warm-ivory transition-all duration-300 inline-flex items-center justify-center">
+                        View Packages
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-warm-ivory border-t border-soft-taupe/20 py-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center">
+                <div class="font-display font-semibold text-2xl text-deep-charcoal mb-4">
+                    Nelo Cafe Digital Studio
+                </div>
+                <p class="text-deep-charcoal/60 mb-6">
+                    Where design meets luxury — crafting digital spaces that inspire.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-8 text-sm text-deep-charcoal/60">
+                    <span>📍 Polokwane, South Africa</span>
+                    <span>📧 nelo3482@gmail.com</span>
+                    <span>📞 074 065 0953</span>
+                </div>
+                <div class="mt-8 pt-8 border-t border-soft-taupe/20 text-sm text-deep-charcoal/50">
+                    © 2025 Nelo Cafe Digital Studio. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="main.js"></script>
+</body>
+</html>

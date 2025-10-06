@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Nelo Cafe Digital Studio</title>
+    <meta name="description" content="Explore our premium portfolio of luxury web design projects for salons, fashion brands, restaurants, and businesses in South Africa.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'warm-ivory': '#F8F6F0',
+                        'deep-charcoal': '#2C2C2C',
+                        'soft-taupe': '#A0927B',
+                        'champagne-gold': '#D4AF37',
+                        'sage-green': '#9CAF88'
+                    },
+                    fontFamily: {
+                        'display': ['Playfair Display', 'serif'],
+                        'body': ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .reveal-element {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .reveal-element.revealed {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .nav-blur {
+            backdrop-filter: blur(20px);
+            background: rgba(248, 246, 240, 0.9);
+        }
+        
+        .portfolio-card {
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .portfolio-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(44, 44, 44, 0.15);
+        }
+        
+        .filter-btn.active {
+            background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%);
+            color: white;
+        }
+        
+        .portfolio-item {
+            display: none;
+        }
+        
+        .portfolio-item.active {
+            display: block;
+            animation: fadeInUp 0.5s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(44, 44, 44, 0.9);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 1rem;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            margin: 2rem;
+        }
+    </style>
+</head>
+<body class="bg-warm-ivory text-deep-charcoal font-body">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 nav-blur border-b border-soft-taupe/20">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="font-display font-semibold text-xl text-deep-charcoal">
+                    <a href="index.html">Nelo Cafe Digital Studio</a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-deep-charcoal hover:text-champagne-gold transition-colors duration-300">Home</a>
+                    <a href="about.html" class="text-deep-charcoal hover:text-champagne-gold transition-colors duration-300">About</a>
+                    <a href="services.html" class="text-deep-charcoal hover:text-champagne-gold transition-colors duration-300">Services</a>
+                    <a href="portfolio.html" class="text-champagne-gold font-medium">Portfolio</a>
+                    <a href="packages.html" class="text-deep-charcoal hover:text-champagne-gold transition-colors duration-300">Packages</a>
+                    <a href="contact.html" class="text-deep-charcoal hover:text-champagne-gold transition-colors duration-300">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 bg-gradient-to-br from-warm-ivory to-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal-element">
+                <h1 class="font-display text-5xl lg:text-6xl font-bold text-deep-charcoal mb-6">
+                    Our Portfolio
+                </h1>
+                <p class="text-xl lg:text-2xl text-deep-charcoal/70 max-w-4xl mx-auto leading-relaxed">
+                    Explore our collection of premium digital experiences crafted for luxury brands across South Africa. 
+                    Each project showcases our commitment to excellence and innovation.
+                </p>
+            </div>
+            
+            <!-- Portfolio Filters -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12 reveal-element">
+                <button class="filter-btn active px-6 py-3 rounded-full border-2 border-champagne-gold text-champagne-gold font-medium transition-all duration-300" data-filter="all">
+                    All Projects
+                </button>
+                <button class="filter-btn px-6 py-3 rounded-full border-2 border-soft-taupe text-deep-charcoal font-medium transition-all duration-300" data-filter="salon">
+                    Salons
+                </button>
+                <button class="filter-btn px-6 py-3 rounded-full border-2 border-soft-taupe text-deep-charcoal font-medium transition-all duration-300" data-filter="fashion">
+                    Fashion
+                </button>
+                <button class="filter-btn px-6 py-3 rounded-full border-2 border-soft-taupe text-deep-charcoal font-medium transition-all duration-300" data-filter="restaurant">
+                    Restaurants
+                </button>
+                <button class="filter-btn px-6 py-3 rounded-full border-2 border-soft-taupe text-deep-charcoal font-medium transition-all duration-300" data-filter="business">
+                    Local Business
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Portfolio Grid -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- LuxeStrands Salon -->
+                <div class="portfolio-item active" data-category="salon">
+                    <div class="portfolio-card bg-warm-ivory rounded-2xl overflow-hidden shadow-lg">
+                        <div class="aspect-video overflow-hidden">
+                            <img src="resources/salon-mockup.png" alt="LuxeStrands Salon Website" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-champagne-gold font-medium text-sm">Beauty & Wellness</span>
+                                <span class="text-deep-charcoal/60 text-sm">2024</span>
+                            </div>
+                            <h3 class="font-display text-2xl font-semibold text-deep-charcoal mb-3">LuxeStrands Salon</h3>
+                            <p class="text-deep-charcoal/70 mb-4 text-sm">
+                                Premium hair salon website featuring elegant layout, service showcase, online booking system, and Instagram integration.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex space-x-2">
+                                    <span class="px-2 py-1 bg-champagne-gold/20 text-champagne-gold text-xs rounded">Web Design</span>
+                                    <span class="px-2 py-1 bg-sage-green/20 text-sage-green text-xs rounded">Booking System</span>
+                                </div>
+                                <button class="text-deep-charcoal hover:text-champagne-gold transition-colors" onclick="openModal('salon-modal')">
+                                    View Details →
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Velora Boutique -->
+                <div class="portfolio-item active" data-category="fashion">
+                    <div class="portfolio-card bg-warm-ivory rounded-2xl overflow-hidden shadow-lg">
+                        <div class="aspect-video overflow-hidden">
+                            <img src="resources/fashion-mockup.png" alt="Velora Boutique Website" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-champagne-gold font-medium text-sm">Fashion & Retail</span>
+                                <span class="text-deep-charcoal/60 text-sm">2024</span>
+                            </div>
+                            <h3 class="font-display text-2xl font-semibold text-deep-charcoal mb-3">Velora Boutique</h3>
+                            <p class="text-deep-charcoal/70 mb-4 text-sm">
+                                Fashion & lifestyle boutique with modern shopping experience, product galleries, and mobile-first design approach.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex space-x-2">
+                                    <span class="px-2 py-1 bg-champagne-gold/20 text-champagne-gold text-xs rounded">E-commerce</span>
+                                    <span class="px-2 py-1 bg-sage-green/20 text-sage-green text-xs rounded">Mobile First</span>
+                                </div>
+                                <button class="text-deep-charcoal hover:text-champagne-gold transition-colors" onclick="openModal('fashion-modal')">
+                                    View Details →
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Maison Éclat Restaurant -->
+                <div class="portfolio-item active" data-category="restaurant">
+                    <div class="portfolio-card bg-warm-ivory rounded-2xl overflow-hidden shadow-lg">
+                        <div class="aspect-video overflow-hidden">
+                            <img src="resources/restaurant-mockup.png" alt="Maison Éclat Restaurant Website" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-champagne-gold font-medium text-sm">Hospitality</span>
+                                <span class="text-deep-charcoal/60 text-sm">2024</span>
+                            </div>
+                            <h3 class="font-display text-2xl font-semibold text-deep-charcoal mb-3">Maison Éclat</h3>
+                            <p class="text-deep-charcoal/70 mb-4 text-sm">
+                                Fine dining restaurant website with reservation system, dynamic menu page, and SEO-optimized structure.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex space-x-2">
+                                    <span class="px-2 py-1 bg-champagne-gold/20 text-champagne-gold text-xs rounded">Restaurant</span>
+                                    <span class="px-2 py-1 bg-sage-green/20 text-sage-green text-xs rounded">Reservations</span>
+                                </div>
+                                <button class="text-deep-charcoal hover:text-champagne-gold transition-colors" onclick="openModal('restaurant-modal')">
+                                    View Details →
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Additional Portfolio Items -->
+                <div class="portfolio-item active" data-category="business">
+                    <div class="portfolio-card bg-warm-ivory rounded-2xl overflow-hidden shadow-lg">
+                        <div class="aspect-video overflow-hidden bg-gradient-to-br from-champagne-gold/20 to-sage-green/20 flex items-center justify-center">
+                            <div class="text-center p-6">
+                                <svg class="w-16 h-16 text-champagne-gold mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                </svg>
+                                <h3 class="font-display text-xl font-semibold text-deep-charcoal mb-2">Local Business Hub</h3>
+                                <p class="text-deep-charcoal/60 text-sm">Professional services website</p>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-champagne-gold font-medium text-sm">Professional Services</span>
+                                <span class="text-deep-charcoal/60 text-sm">2024</span>
+                            </div>
+                            <h3 class="font-display text-2xl font-semibold text-deep-charcoal mb-3">Business Hub</h3>
+                            <p class="text-deep-charcoal/70 mb-4 text-sm">
+                                Comprehensive business directory and professional services platform with advanced search and booking features.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex space-x-2">
+                                    <span class="px-2 py-1 bg-champagne-gold/20 text-champagne-gold text-xs rounded">Directory</span>
+                                    <span class="px-2 py-1 bg-sage-green/20 text-sage-green text-xs rounded">Booking</span>
+                                </div>
+                                <button class="text-deep-charcoal hover:text-champagne-gold transition-colors" onclick="openModal('business-modal')">
+                                    View Details →
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item active" data-category="salon">
+                    <div class="portfolio-card bg-warm-ivory rounded-2xl overflow-hidden shadow-lg">
+                        <div class="aspect-video overflow-hidden bg-gradient-to-br from-sage-green/20 to-champagne-gold/20 flex items-center justify-center">
+                            <div class="text-center p-6">
+                                <svg class="w-16 h-16 text-sage-green mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                </svg>
+                                <h3 class="font-display text-xl font-semibold text-deep-charcoal mb-2">Spa Wellness Center</h3>
+                                <p class="text-deep-charcoal/60 text-sm">Holistic wellness platform</p>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-champagne-gold font-medium text-sm">Wellness & Spa</span>
+                                <span class="text-deep-charcoal/60 text-sm">2024</span>
+                            </div>
+                            <h3 class="font-display text-2xl font-semibold text-deep-charcoal mb-3">Serenity Spa</h3>
+                            <p class="text-deep-charcoal/70 mb-4 text-sm">
+                                Holistic wellness center website with treatment booking, membership management, and wellness content library.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex space-x-2">
+                                    <span class="px-2 py-1 bg-champagne-gold/20 text-champagne-gold text-xs rounded">Wellness</span>
+                                    <span class="px-2 py-1 bg-sage-green/20 text-sage-green text-xs rounded">Membership</span>
+                                </div>
+                                <button class="text-deep-charcoal hover:text-champagne-gold transition-colors" onclick="openModal('spa-modal')">
+                                    View Details →
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item active" data-category="fashion">
+                    <div class="portfolio-card bg-warm-ivory rounded-2xl overflow-hidden shadow-lg">
+                        <div class="aspect-video overflow-hidden bg-gradient-to-br from-champagne-gold/20 to-soft-taupe/20 flex items-center justify-center">
+                            <div class="text-center p-6">
+                                <svg class="w-16 h-16 text-champagne-gold mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                                </svg>
+                                <h3 class="font-display text-xl font-semibold text-deep-charcoal mb-2">Artisan Collective</h3>
+                                <p class="text-deep-charcoal/60 text-sm">Handcrafted goods marketplace</p>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-champagne-gold font-medium text-sm">Artisan Marketplace</span>
+                                <span class="text-deep-charcoal/60 text-sm">2024</span>
+                            </div>
+                            <h3 class="font-display text-2xl font-semibold text-deep-charcoal mb-3">Craft Collective</h3>
+                            <p class="text-deep-charcoal/70 mb-4 text-sm">
+                                Artisan marketplace featuring handcrafted goods with vendor management and secure payment processing.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex space-x-2">
+                                    <span class="px-2 py-1 bg-champagne-gold/20 text-champagne-gold text-xs rounded">Marketplace</span>
+                                    <span class="px-2 py-1 bg-sage-green/20 text-sage-green text-xs rounded">Artisan</span>
+                                </div>
+                                <button class="text-deep-charcoal hover:text-champagne-gold transition-colors" onclick="openModal('artisan-modal')">
+                                    View Details →
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Results Section -->
+    <section class="py-20 bg-deep-charcoal text-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal-element">
+                <h2 class="font-display text-4xl lg:text-5xl font-bold mb-6">
+                    Proven Results
+                </h2>
+                <p class="text-xl text-warm-ivory/80 max-w-3xl mx-auto">
+                    Our portfolio projects consistently deliver exceptional results for our clients.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center reveal-element">
+                    <div class="text-4xl font-display font-bold text-champagne-gold mb-2" data-count="60">0</div>
+                    <div class="text-warm-ivory/80 mb-2">Average Increase in Bookings</div>
+                    <div class="text-sm text-warm-ivory/60">For salon and service businesses</div>
+                </div>
+                <div class="text-center reveal-element">
+                    <div class="text-4xl font-display font-bold text-champagne-gold mb-2" data-count="45">0</div>
+                    <div class="text-warm-ivory/80 mb-2">Average Increase in Sales</div>
+                    <div class="text-sm text-warm-ivory/60">For e-commerce and retail clients</div>
+                </div>
+                <div class="text-center reveal-element">
+                    <div class="text-4xl font-display font-bold text-champagne-gold mb-2" data-count="85">0</div>
+                    <div class="text-warm-ivory/80 mb-2">Average Increase in Traffic</div>
+                    <div class="text-sm text-warm-ivory/60">Through SEO and optimization</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Call to Action -->
+    <section class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="reveal-element">
+                <h2 class="font-display text-4xl lg:text-5xl font-bold text-deep-charcoal mb-6">
+                    Ready to Join Our Portfolio?
+                </h2>
+                <p class="text-xl text-deep-charcoal/70 mb-8 max-w-2xl mx-auto">
+                    Let's create something extraordinary together. Your project could be the next success story in our portfolio.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="contact.html" class="bg-champagne-gold text-white px-8 py-4 rounded-lg font-medium text-lg hover:bg-champagne-gold/90 transition-all duration-300 inline-flex items-center justify-center">
+                        Start Your Project
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                        </svg>
+                    </a>
+                    <a href="packages.html" class="border-2 border-deep-charcoal text-deep-charcoal px-8 py-4 rounded-lg font-medium text-lg hover:bg-deep-charcoal hover:text-warm-ivory transition-all duration-300 inline-flex items-center justify-center">
+                        View Packages
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Portfolio Modals -->
+    <div id="salon-modal" class="modal">
+        <div class="modal-content p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="font-display text-3xl font-bold text-deep-charcoal">LuxeStrands Salon</h2>
+                <button onclick="closeModal('salon-modal')" class="text-deep-charcoal hover:text-champagne-gold">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="space-y-6">
+                <img src="resources/salon-mockup.png" alt="LuxeStrands Salon" class="w-full rounded-lg">
+                <div>
+                    <h3 class="font-display text-xl font-semibold text-deep-charcoal mb-3">Project Overview</h3>
+                    <p class="text-deep-charcoal/70 mb-4">
+                        LuxeStrands Salon needed a premium website that reflected their high-end services and attracted their target clientele. 
+                        We created an elegant, user-friendly platform that showcases their services and simplifies the booking process.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-xl font-semibold text-deep-charcoal mb-3">Key Features</h3>
+                    <ul class="space-y-2 text-deep-charcoal/70">
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-champagne-gold mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Online booking system with real-time availability
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-champagne-gold mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Instagram integration for portfolio showcase
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-champagne-gold mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Service catalog with pricing and descriptions
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-champagne-gold mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Mobile-responsive design for on-the-go bookings
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-display text-xl font-semibold text-deep-charcoal mb-3">Results</h3>
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="text-center p-4 bg-champagne-gold/10 rounded-lg">
+                            <div class="text-2xl font-display font-bold text-champagne-gold">60%</div>
+                            <div class="text-sm text-deep-charcoal/70">Increase in Bookings</div>
+                        </div>
+                        <div class="text-center p-4 bg-sage-green/10 rounded-lg">
+                            <div class="text-2xl font-display font-bold text-sage-green">85%</div>
+                            <div class="text-sm text-deep-charcoal/70">Mobile Traffic</div>
+                        </div>
+                        <div class="text-center p-4 bg-champagne-gold/10 rounded-lg">
+                            <div class="text-2xl font-display font-bold text-champagne-gold">4.9/5</div>
+                            <div class="text-sm text-deep-charcoal/70">Customer Rating</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Additional modals would follow the same pattern -->
+    <div id="fashion-modal" class="modal">
+        <div class="modal-content p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="font-display text-3xl font-bold text-deep-charcoal">Velora Boutique</h2>
+                <button onclick="closeModal('fashion-modal')" class="text-deep-charcoal hover:text-champagne-gold">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="space-y-6">
+                <img src="resources/fashion-mockup.png" alt="Velora Boutique" class="w-full rounded-lg">
+                <div>
+                    <h3 class="font-display text-xl font-semibold text-deep-charcoal mb-3">Project Overview</h3>
+                    <p class="text-deep-charcoal/70 mb-4">
+                        Velora Boutique required a sophisticated e-commerce platform that would showcase their curated fashion collection 
+                        while providing a seamless shopping experience for their discerning customers.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-xl font-semibold text-deep-charcoal mb-3">Key Features</h3>
+                    <ul class="space-y-2 text-deep-charcoal/70">
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-champagne-gold mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Advanced product filtering and search
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-champagne-gold mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Secure payment gateway integration
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-champagne-gold mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Size guide and product recommendations
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-champagne-gold mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Wishlist and customer accounts
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="bg-warm-ivory border-t border-soft-taupe/20 py-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center">
+                <div class="font-display font-semibold text-2xl text-deep-charcoal mb-4">
+                    Nelo Cafe Digital Studio
+                </div>
+                <p class="text-deep-charcoal/60 mb-6">
+                    Where design meets luxury — crafting digital spaces that inspire.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-8 text-sm text-deep-charcoal/60">
+                    <span>📍 Polokwane, South Africa</span>
+                    <span>📧 nelo3482@gmail.com</span>
+                    <span>📞 074 065 0953</span>
+                </div>
+                <div class="mt-8 pt-8 border-t border-soft-taupe/20 text-sm text-deep-charcoal/50">
+                    © 2025 Nelo Cafe Digital Studio. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Portfolio filtering functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const portfolioItems = document.querySelectorAll('.portfolio-item');
+            
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const filter = btn.getAttribute('data-filter');
+                    
+                    // Update active button
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    // Filter portfolio items
+                    portfolioItems.forEach(item => {
+                        const category = item.getAttribute('data-category');
+                        if (filter === 'all' || category === filter) {
+                            item.classList.add('active');
+                        } else {
+                            item.classList.remove('active');
+                        }
+                    });
+                });
+            });
+            
+            // Initialize scroll reveal
+            const revealElements = document.querySelectorAll('.reveal-element');
+            
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            
+            revealElements.forEach(element => {
+                revealObserver.observe(element);
+            });
+            
+            // Counter animation
+            const counters = document.querySelectorAll('[data-count]');
+            
+            const counterObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const target = parseInt(counter.getAttribute('data-count'));
+                        animateCounter(counter, target);
+                        counterObserver.unobserve(counter);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            counters.forEach(counter => {
+                counterObserver.observe(counter);
+            });
+        });
+        
+        function animateCounter(element, target) {
+            let current = 0;
+            const increment = target / 60;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current) + '%';
+            }, 16);
+        }
+        
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Close modal when clicking outside
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
+</body>
+</html>

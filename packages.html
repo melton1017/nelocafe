@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Packages - Nelo Cafe Digital Studio</title>
+    <meta name="description" content="Explore our flexible website packages designed to grow with your business. From starter to premium solutions with transparent pricing.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'warm-ivory': '#F8F6F0',
+                        'deep-charcoal': '#2C2C2C',
+                        'soft-taupe': '#A0927B',
+                        'champagne-gold': '#D4AF37',
+                        'sage-green': '#9CAF88'
+                    },
+                    fontFamily: {
+                        'display': ['Playfair Display', 'serif'],
+                        'body': ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .reveal-element {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .reveal-element.revealed {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .nav-blur {
+            backdrop-filter: blur(20px);
+            background: rgba(248, 246, 240, 0.9);
+        }
+        
+        .package-card {
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .package-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(44, 44, 44, 0.15);
+        }
+        
+        .package-card.featured {
+            border: 2px solid #D4AF37;
+            position: relative;
+        }
+        
+        .package-card.featured::before {
+            content: 'Most Popular';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%);
+            color: white;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+        }
+        
+        .feature-item.included {
+            color: #2C2C2C;
+        }
+        
+        .feature-item.not-included {
+            color: #A0927B;
+            opacity: 0.6;
+        }
+        
+        .calculator-section {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(156, 175, 136, 0.1) 100%);
+        }
+        
+        .range-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 8px;
+            border-radius: 4px;
+            background: #E5E7EB;
+            outline: none;
+        }
+        
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #D4AF37;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4);
+        }
+        
+        .range-slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #D4AF37;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4);
+        }
+        
+        .comparison-table {
+            overflow-x: auto;
+        }
+        
+        .comparison-table table {
+            min-width: 800px;
+        }
+        
+        .check-icon {
+            color: #9CAF88;
+        }
+        
+        .cross-icon {
+            color: #A0927B;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body class="bg-warm-ivory text-deep-charcoal font-body">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 nav-blur border-b border-soft-taupe/20">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="font-display font-semibold text-xl text-deep-charcoal">
+                    <a href="index.html">Nelo Cafe Digital Studio</a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-deep-charcoal hover:text-champagne-gold transition-colors duration-300">Home</a>
+                    <a href="about.html" class="text-deep-charcoal hover:text-champagne-gold transition-colors duration-300">About</a>
+                    <a href="services.html" class="text-deep-charcoal hover:text-champagne-gold transition-colors duration-300">Services</a>
+                    <a href="portfolio.html" class="text-deep-charcoal hover:text-champagne-gold transition-colors duration-300">Portfolio</a>
+                    <a href="packages.html" class="text-champagne-gold font-medium">Packages</a>
+                    <a href="contact.html" class="text-deep-charcoal hover:text-champagne-gold transition-colors duration-300">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 bg-gradient-to-br from-warm-ivory to-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal-element">
+                <h1 class="font-display text-5xl lg:text-6xl font-bold text-deep-charcoal mb-6">
+                    Website Packages
+                </h1>
+                <p class="text-xl lg:text-2xl text-deep-charcoal/70 max-w-4xl mx-auto leading-relaxed">
+                    Flexible options designed to grow with your business. From budget-friendly starters to comprehensive 
+                    premium solutions, we have the perfect package for your needs.
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Package Cards -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Starter Package -->
+                <div class="package-card bg-warm-ivory p-8 rounded-2xl border border-soft-taupe/20 reveal-element">
+                    <div class="text-center mb-6">
+                        <h3 class="font-display text-2xl font-semibold text-deep-charcoal mb-2">Starter Package</h3>
+                        <p class="text-deep-charcoal/70 text-sm mb-4">Perfect for new businesses</p>
+                        <div class="text-4xl font-display font-bold text-champagne-gold mb-2">R500</div>
+                        <p class="text-deep-charcoal/60 text-sm">Once-off payment</p>
+                    </div>
+                    
+                    <div class="space-y-3 mb-8">
+                        <div class="feature-item included">
+                            <svg class="w-5 h-5 text-champagne-gold mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-sm">1-page website (Home + Contact)</span>
+                        </div>
+                        <div class="feature-item included">
+                            <svg class="w-5 h-5 text-champagne-gold mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-sm">Mobile-friendly design</span>
+                        </div>
+                        <div class="feature-item included">
+                            <svg class="w-5 h-5 text-champagne-gold mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-sm">WhatsApp button for direct contact</span>
+                        </div>
+                        <div class="feature-item included">
+                            <svg class="w-5 h-5 text-champagne-gold mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-sm">Basic SEO setup</span>
+                        </div>
+                        <div class="feature-item not-included">
+                            <svg class="w-5 h-5 cross-icon mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                            <span class="text-sm">Multiple pages</span>
+                        </div>
+                        <div class="feature-item not-included">
+                            <svg class="w-5 h-5 cross-icon mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                            <span class="text-sm">Advanced features</span>
+                        </div>
+                    </div>
+                    
+                    <a href="contact.html" class="block w-full bg-deep-charcoal text-white text-center py-3 rounded-lg font-medium hover:bg-deep-charcoal/90 transition-all duration-300">
+                        Choose Starter
+                    </a>
+                </div>
+                
+                <!-- Standard Package (Featured) -->
+                <div class="package-card featured bg-warm-ivory p-8 rounded-2xl reveal-element">
+                    <div class="text-center mb-6">
+                        <h3 class="font-display text-2xl font-semibold text-deep-charcoal mb-2">Standard Package</h3>
+                        <p class="text-deep-charcoal/70 text-sm mb-4">Most popular choice</p>
+                        <div class="text-4xl font-display font-bold text-champagne-gold mb-2">R1,200</div>
+                        <p class="text-deep-charcoal/60 text-sm">Once-off payment</p>
+                    </div>
+                    
+                    <div class="space-y-3 mb-8">
+                        <div class="feature-item included">
+                            <svg class="w-5 h-5 text-champagne-gold mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-sm">3–5 page website</span>
+                        </div>
+                        <div class="feature-item included">
+                            <svg class="w-5 h-5 text-champagne-gold mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-sm">Mobile-friendly + professional layout</span>
+                        </div>
+                        <div class="feature-item included">
+                            <svg class="w-5 h-5 text-champagne-gold mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-sm">Basic SEO (Google-ready)</span>
+                        </div>
+                        <div class="feature-item included">
+                            <svg class="w-5 h-5 text-champagne-gold mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-sm">Contact form + WhatsApp integration</span>
+                        </div>
+                        <div class="feature-item included">
+                            <svg class="w-5 h-5 text-champagne-gold mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-sm">Social media integration</span>
+                        </div>
+                        <div class="feature-item not-included">
+                            <svg class="w-5 h-5 cross-icon mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                            <span class="text-sm">E-commerce functionality</span>
+                        </div>
+                    </div>
+                    
+                    <a href="contact.html" class="block w-full bg-champagne-gold text-white text-center py-3 rounded-lg font-medium hover:bg-champagne-gold/90 transition-all duration-300">
+                        Choose Standard
+                    </a>
+                </div>
+                
+                <!-- Premium Package -->
+                <div class="package-card bg-warm-ivory p-8 rounded-2xl border border-soft-taupe/20 reveal-element">
+                    <div class="text-center mb-6">
+                        <h3 class="font-display text-2xl font-semibold text-deep-charcoal mb-2">Premium Package</h3>
+                        <p class="text-deep-charcoal/70 text-sm mb-4">Complete digital solution</p>
+                        <div class="text-4xl font-display font-bold text-sage-green mb-2">R2,500+</div>
+                        <p class="text-deep-charcoal/60 text-sm">Once-off payment</p>
+                    </div>
+                    
+                    <div class="space-y-3 mb-8">
+                        <div class="feature-item included">
+                            <svg class="w-5 h-5 text-sage-green mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-sm">Full custom website (5+ pages)</span>
+                        </div>
+                        <div class="feature-item included">
+                            <svg class="w-5 h-5 text-sage-green mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-sm">Advanced features (booking, e-commerce)</span>
+                        </div>
+                        <div class="feature-item included">
+                            <svg class="w-5 h-5 text-sage-green mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-sm">Strong SEO setup</span>
+                        </div>
+                        <div class="feature-item included">
+                            <svg class="w-5 h-5 text-sage-green mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-sm">Ongoing support & updates</span>
+                        </div>
+                        <div class="feature-item included">
+                            <svg class="w-5 h-5 text-sage-green mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-sm">Custom branding & design</span>
+                        </div>
+                        <div class="feature-item included">
+                            <svg class="w-5 h-5 text-sage-green mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-sm">Analytics & performance tracking</span>
+                        </div>
+                    </div>
+                    
+                    <a href="contact.html" class="block w-full bg-sage-green text-white text-center py-3 rounded-lg font-medium hover:bg-sage-green/90 transition-all duration-300">
+                        Choose Premium
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Pricing Calculator -->
+    <section class="py-20 calculator-section">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-12 reveal-element">
+                <h2 class="font-display text-4xl lg:text-5xl font-bold text-deep-charcoal mb-6">
+                    Custom Quote Calculator
+                </h2>
+                <p class="text-xl text-deep-charcoal/70 max-w-3xl mx-auto">
+                    Get an instant estimate for your project by selecting the features you need.
+                </p>
+            </div>
+            
+            <div class="bg-white rounded-2xl p-8 shadow-lg reveal-element">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-deep-charcoal font-medium mb-3">Number of Pages</label>
+                            <input type="range" min="1" max="10" value="3" class="range-slider w-full" id="pageRange">
+                            <div class="flex justify-between text-sm text-deep-charcoal/60 mt-2">
+                                <span>1</span>
+                                <span id="pageValue">3</span>
+                                <span>10+</span>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-deep-charcoal font-medium mb-3">Additional Features</label>
+                            <div class="space-y-3">
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="feature-checkbox mr-3" data-price="300" data-feature="E-commerce">
+                                    <span class="text-sm">E-commerce Functionality (+R300)</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="feature-checkbox mr-3" data-price="200" data-feature="Booking System">
+                                    <span class="text-sm">Booking System (+R200)</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="feature-checkbox mr-3" data-price="150" data-feature="SEO Optimization">
+                                    <span class="text-sm">Advanced SEO (+R150)</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="feature-checkbox mr-3" data-price="250" data-feature="Custom Branding">
+                                    <span class="text-sm">Custom Branding (+R250)</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="feature-checkbox mr-3" data-price="100" data-feature="Blog Setup">
+                                    <span class="text-sm">Blog Setup (+R100)</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-warm-ivory rounded-xl p-6">
+                        <h3 class="font-display text-xl font-semibold text-deep-charcoal mb-4">Project Summary</h3>
+                        <div class="space-y-3 mb-6">
+                            <div class="flex justify-between">
+                                <span class="text-deep-charcoal/70">Base Package:</span>
+                                <span class="font-medium" id="basePrice">R1,200</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-deep-charcoal/70">Additional Pages:</span>
+                                <span class="font-medium" id="pagePrice">R0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-deep-charcoal/70">Extra Features:</span>
+                                <span class="font-medium" id="featurePrice">R0</span>
+                            </div>
+                            <hr class="border-soft-taupe/30">
+                            <div class="flex justify-between text-lg font-semibold">
+                                <span>Total Estimate:</span>
+                                <span class="text-champagne-gold" id="totalPrice">R1,200</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h4 class="font-medium text-deep-charcoal mb-2">Selected Features:</h4>
+                            <div id="selectedFeatures" class="text-sm text-deep-charcoal/70">
+                                Standard Package (3 pages)
+                            </div>
+                        </div>
+                        
+                        <a href="contact.html" class="block w-full bg-champagne-gold text-white text-center py-3 rounded-lg font-medium hover:bg-champagne-gold/90 transition-all duration-300">
+                            Get Custom Quote
+                        </a>
+                        
+                        <p class="text-xs text-deep-charcoal/60 mt-3 text-center">
+                            *Final pricing may vary based on specific requirements
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Comparison Table -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal-element">
+                <h2 class="font-display text-4xl lg:text-5xl font-bold text-deep-charcoal mb-6">
+                    Package Comparison
+                </h2>
+                <p class="text-xl text-deep-charcoal/70 max-w-3xl mx-auto">
+                    Compare features across all our packages to find the perfect fit for your business.
+                </p>
+            </div>
+            
+            <div class="comparison-table reveal-element">
+                <table class="w-full bg-warm-ivory rounded-2xl overflow-hidden">
+                    <thead class="bg-deep-charcoal text-white">
+                        <tr>
+                            <th class="text-left p-4 font-display text-lg">Features</th>
+                            <th class="text-center p-4 font-display text-lg">Starter</th>
+                            <th class="text-center p-4 font-display text-lg">Standard</th>
+                            <th class="text-center p-4 font-display text-lg">Premium</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-soft-taupe/20">
+                            <td class="p-4 font-medium">Number of Pages</td>
+                            <td class="text-center p-4">1</td>
+                            <td class="text-center p-4">3-5</td>
+                            <td class="text-center p-4">5+</td>
+                        </tr>
+                        <tr class="border-b border-soft-taupe/20">
+                            <td class="p-4 font-medium">Mobile Responsive</td>
+                            <td class="text-center p-4">
+                                <svg class="w-5 h-5 check-icon mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </td>
+                            <td class="text-center p-4">
+                                <svg class="w-5 h-5 check-icon mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </td>
+                            <td class="text-center p-4">
+                                <svg class="w-5 h-5 check-icon mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-soft-taupe/20">
+                            <td class="p-4 font-medium">SEO Optimization</td>
+                            <td class="text-center p-4">
+                                <svg class="w-5 h-5 check-icon mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </td>
+                            <td class="text-center p-4">
+                                <svg class="w-5 h-5 check-icon mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </td>
+                            <td class="text-center p-4">
+                                <svg class="w-5 h-5 check-icon mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-soft-taupe/20">
+                            <td class="p-4 font-medium">Contact Forms</td>
+                            <td class="text-center p-4">
+                                <svg class="w-5 h-5 cross-icon mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </td>
+                            <td class="text-center p-4">
+                                <svg class="w-5 h-5 check-icon mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </td>
+                            <td class="text-center p-4">
+                                <svg class="w-5 h-5 check-icon mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-soft-taupe/20">
+                            <td class="p-4 font-medium">E-commerce</td>
+                            <td class="text-center p-4">
+                                <svg class="w-5 h-5 cross-icon mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </td>
+                            <td class="text-center p-4">
+                                <svg class="w-5 h-5 cross-icon mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </td>
+                            <td class="text-center p-4">
+                                <svg class="w-5 h-5 check-icon mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-soft-taupe/20">
+                            <td class="p-4 font-medium">Booking System</td>
+                            <td class="text-center p-4">
+                                <svg class="w-5 h-5 cross-icon mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </td>
+                            <td class="text-center p-4">
+                                <svg class="w-5 h-5 cross-icon mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </td>
+                            <td class="text-center p-4">
+                                <svg class="w-5 h-5 check-icon mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-medium">Ongoing Support</td>
+                            <td class="text-center p-4">
+                                <svg class="w-5 h-5 cross-icon mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </td>
+                            <td class="text-center p-4">
+                                <svg class="w-5 h-5 cross-icon mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </td>
+                            <td class="text-center p-4">
+                                <svg class="w-5 h-5 check-icon mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Additional Costs -->
+    <section class="py-20 bg-warm-ivory">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-12 reveal-element">
+                <h2 class="font-display text-4xl font-bold text-deep-charcoal mb-6">
+                    Additional Costs
+                </h2>
+                <p class="text-xl text-deep-charcoal/70">
+                    Transparent pricing for ongoing services and domain management.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-2xl shadow-lg reveal-element">
+                    <h3 class="font-display text-xl font-semibold text-deep-charcoal mb-4">Domain & Hosting</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-deep-charcoal/70">Domain Registration (per year)</span>
+                            <span class="font-medium">~R650</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-deep-charcoal/70">Premium Hosting (per month)</span>
+                            <span class="font-medium">~R850</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-deep-charcoal/70">SSL Certificate</span>
+                            <span class="font-medium">Included</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-deep-charcoal/60 mt-4">
+                        We handle all technical setup and guide you through every step.
+                    </p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-2xl shadow-lg reveal-element">
+                    <h3 class="font-display text-xl font-semibold text-deep-charcoal mb-4">Maintenance & Support</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-deep-charcoal/70">Basic Support (per month)</span>
+                            <span class="font-medium">R350</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-deep-charcoal/70">Premium Support (per month)</span>
+                            <span class="font-medium">R650</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-deep-charcoal/70">Content Updates</span>
+                            <span class="font-medium">R150/hour</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-deep-charcoal/60 mt-4">
+                        Keep your website secure, updated, and performing at its best.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Call to Action -->
+    <section class="py-20 bg-deep-charcoal text-white">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="reveal-element">
+                <h2 class="font-display text-4xl lg:text-5xl font-bold mb-6">
+                    Ready to Get Started?
+                </h2>
+                <p class="text-xl text-warm-ivory/80 mb-8 max-w-2xl mx-auto">
+                    Choose the package that fits your needs or contact us for a custom solution. 
+                    We're here to help you succeed online.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="contact.html" class="bg-champagne-gold text-deep-charcoal px-8 py-4 rounded-lg font-medium text-lg hover:bg-champagne-gold/90 transition-all duration-300 inline-flex items-center justify-center">
+                        Start Your Project
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                        </svg>
+                    </a>
+                    <a href="services.html" class="border-2 border-warm-ivory text-warm-ivory px-8 py-4 rounded-lg font-medium text-lg hover:bg-warm-ivory hover:text-deep-charcoal transition-all duration-300 inline-flex items-center justify-center">
+                        View Services
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-warm-ivory border-t border-soft-taupe/20 py-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center">
+                <div class="font-display font-semibold text-2xl text-deep-charcoal mb-4">
+                    Nelo Cafe Digital Studio
+                </div>
+                <p class="text-deep-charcoal/60 mb-6">
+                    Where design meets luxury — crafting digital spaces that inspire.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-8 text-sm text-deep-charcoal/60">
+                    <span>📍 Polokwane, South Africa</span>
+                    <span>📧 nelo3482@gmail.com</span>
+                    <span>📞 074 065 0953</span>
+                </div>
+                <div class="mt-8 pt-8 border-t border-soft-taupe/20 text-sm text-deep-charcoal/50">
+                    © 2025 Nelo Cafe Digital Studio. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Pricing Calculator
+        document.addEventListener('DOMContentLoaded', function() {
+            const pageRange = document.getElementById('pageRange');
+            const pageValue = document.getElementById('pageValue');
+            const basePrice = document.getElementById('basePrice');
+            const pagePrice = document.getElementById('pagePrice');
+            const featurePrice = document.getElementById('featurePrice');
+            const totalPrice = document.getElementById('totalPrice');
+            const selectedFeatures = document.getElementById('selectedFeatures');
+            const featureCheckboxes = document.querySelectorAll('.feature-checkbox');
+            
+            let currentBasePrice = 1200;
+            let currentPagePrice = 0;
+            let currentFeaturePrice = 0;
+            
+            // Page range slider
+            pageRange.addEventListener('input', function() {
+                const pages = parseInt(this.value);
+                pageValue.textContent = pages;
+                
+                // Calculate base package
+                if (pages <= 1) {
+                    currentBasePrice = 500;
+                    basePrice.textContent = 'R500';
+                } else if (pages <= 5) {
+                    currentBasePrice = 1200;
+                    basePrice.textContent = 'R1,200';
+                } else {
+                    currentBasePrice = 2500;
+                    basePrice.textContent = 'R2,500+';
+                }
+                
+                // Calculate additional page costs
+                if (pages > 5) {
+                    currentPagePrice = (pages - 5) * 200;
+                    pagePrice.textContent = 'R' + currentPagePrice;
+                } else {
+                    currentPagePrice = 0;
+                    pagePrice.textContent = 'R0';
+                }
+                
+                updateTotal();
+                updateFeatures();
+            });
+            
+            // Feature checkboxes
+            featureCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    calculateFeaturePrice();
+                    updateTotal();
+                    updateFeatures();
+                });
+            });
+            
+            function calculateFeaturePrice() {
+                currentFeaturePrice = 0;
+                featureCheckboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        currentFeaturePrice += parseInt(checkbox.getAttribute('data-price'));
+                    }
+                });
+                featurePrice.textContent = 'R' + currentFeaturePrice;
+            }
+            
+            function updateTotal() {
+                const total = currentBasePrice + currentPagePrice + currentFeaturePrice;
+                totalPrice.textContent = 'R' + total.toLocaleString();
+            }
+            
+            function updateFeatures() {
+                const features = [];
+                const pages = parseInt(pageRange.value);
+                
+                if (pages <= 1) {
+                    features.push('Starter Package (1 page)');
+                } else if (pages <= 5) {
+                    features.push('Standard Package (' + pages + ' pages)');
+                } else {
+                    features.push('Premium Package (' + pages + ' pages)');
+                }
+                
+                featureCheckboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        features.push(checkbox.getAttribute('data-feature'));
+                    }
+                });
+                
+                selectedFeatures.textContent = features.join(', ') || 'No additional features selected';
+            }
+            
+            // Initialize scroll reveal
+            const revealElements = document.querySelectorAll('.reveal-element');
+            
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            
+            revealElements.forEach(element => {
+                revealObserver.observe(element);
+            });
+        });
+    </script>
+</body>
+</html>

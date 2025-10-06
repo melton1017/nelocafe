@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Nelo Cafe Digital Studio</title>
+    <meta name="description" content="Learn about Nelo Cafe Digital Studio's mission to empower businesses with premium digital solutions and luxury web design in South Africa.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'warm-ivory': '#F8F6F0',
+                        'deep-charcoal': '#2C2C2C',
+                        'soft-taupe': '#A0927B',
+                        'champagne-gold': '#D4AF37',
+                        'sage-green': '#9CAF88'
+                    },
+                    fontFamily: {
+                        'display': ['Playfair Display', 'serif'],
+                        'body': ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .reveal-element {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .reveal-element.revealed {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .nav-blur {
+            backdrop-filter: blur(20px);
+            background: rgba(248, 246, 240, 0.9);
+        }
+        
+        .testimonial-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(248,246,240,0.9) 100%);
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body class="bg-warm-ivory text-deep-charcoal font-body">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 nav-blur border-b border-soft-taupe/20">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="font-display font-semibold text-xl text-deep-charcoal">
+                    <a href="index.html">Nelo Cafe Digital Studio</a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-deep-charcoal hover:text-champagne-gold transition-colors duration-300">Home</a>
+                    <a href="about.html" class="text-champagne-gold font-medium">About</a>
+                    <a href="services.html" class="text-deep-charcoal hover:text-champagne-gold transition-colors duration-300">Services</a>
+                    <a href="portfolio.html" class="text-deep-charcoal hover:text-champagne-gold transition-colors duration-300">Portfolio</a>
+                    <a href="packages.html" class="text-deep-charcoal hover:text-champagne-gold transition-colors duration-300">Packages</a>
+                    <a href="contact.html" class="text-deep-charcoal hover:text-champagne-gold transition-colors duration-300">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 bg-gradient-to-br from-warm-ivory to-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal-element">
+                <h1 class="font-display text-5xl lg:text-6xl font-bold text-deep-charcoal mb-6">
+                    About Nelo Cafe Digital Studio
+                </h1>
+                <p class="text-xl lg:text-2xl text-deep-charcoal/70 max-w-4xl mx-auto leading-relaxed">
+                    We are a premium web design and digital solutions agency based in Polokwane, South Africa, 
+                    specializing in creating luxurious, modern, and high-performing websites tailored to elevate brands.
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="reveal-element">
+                    <div class="aspect-video rounded-2xl overflow-hidden shadow-2xl">
+                        <img src="resources/brand-identity.png" alt="Brand Identity Visualization" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="space-y-8 reveal-element">
+                    <div>
+                        <h2 class="font-display text-3xl font-semibold text-deep-charcoal mb-4">Our Mission</h2>
+                        <p class="text-lg text-deep-charcoal/70 leading-relaxed">
+                            To empower businesses with a strong online presence that reflects their identity and drives growth. 
+                            From elegant landing pages to fully custom e-commerce platforms, we deliver high-quality digital 
+                            solutions that look beautiful, function seamlessly, and convert visitors into loyal clients.
+                        </p>
+                    </div>
+                    <div>
+                        <h2 class="font-display text-3xl font-semibold text-deep-charcoal mb-4">Our Vision</h2>
+                        <p class="text-lg text-deep-charcoal/70 leading-relaxed">
+                            To be the leading luxury digital agency in South Africa, known for our commitment to innovation, 
+                            quality, and client satisfaction. We envision a digital landscape where every brand has the 
+                            opportunity to shine through exceptional design and strategic digital solutions.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Company Values -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal-element">
+                <h2 class="font-display text-4xl lg:text-5xl font-bold text-deep-charcoal mb-6">
+                    Our Core Values
+                </h2>
+                <p class="text-xl text-deep-charcoal/70 max-w-3xl mx-auto">
+                    These principles guide every project we undertake and every relationship we build.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center p-8 rounded-2xl bg-warm-ivory reveal-element">
+                    <div class="w-20 h-20 bg-champagne-gold/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-10 h-10 text-champagne-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-2xl font-semibold text-deep-charcoal mb-4">Excellence</h3>
+                    <p class="text-deep-charcoal/70">
+                        We strive for perfection in every detail, delivering premium quality that exceeds expectations and sets new industry standards.
+                    </p>
+                </div>
+                
+                <div class="text-center p-8 rounded-2xl bg-warm-ivory reveal-element">
+                    <div class="w-20 h-20 bg-sage-green/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-10 h-10 text-sage-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-2xl font-semibold text-deep-charcoal mb-4">Collaboration</h3>
+                    <p class="text-deep-charcoal/70">
+                        Your vision is our priority. We work closely with you from start to finish, ensuring every solution aligns with your goals.
+                    </p>
+                </div>
+                
+                <div class="text-center p-8 rounded-2xl bg-warm-ivory reveal-element">
+                    <div class="w-20 h-20 bg-champagne-gold/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-10 h-10 text-champagne-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-2xl font-semibold text-deep-charcoal mb-4">Innovation</h3>
+                    <p class="text-deep-charcoal/70">
+                        We embrace cutting-edge technologies and creative approaches to deliver solutions that are both beautiful and functional.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Founder Profile -->
+    <section class="py-20 bg-warm-ivory">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="reveal-element">
+                    <h2 class="font-display text-4xl font-bold text-deep-charcoal mb-6">Meet the Founder</h2>
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="font-display text-2xl font-semibold text-champagne-gold mb-2">
+                                Melton Nkgetheng Mathobela
+                            </h3>
+                            <p class="text-lg text-deep-charcoal/70">
+                                Founder & Creative Director
+                            </p>
+                        </div>
+                        <div class="space-y-4 text-deep-charcoal/70">
+                            <p class="text-lg leading-relaxed">
+                                With over 5 years of experience in digital design and development, Melton founded Nelo Cafe Digital Studio 
+                                with a vision to bring luxury digital experiences to South African businesses. His passion for design 
+                                excellence and commitment to client success has established the studio as a premier destination for 
+                                premium digital solutions.
+                            </p>
+                            <p class="text-lg leading-relaxed">
+                                Melton's expertise spans web design, brand development, and digital strategy, with a particular focus 
+                                on creating experiences that not only look beautiful but drive real business results. His collaborative 
+                                approach ensures that every project reflects the unique vision and goals of each client.
+                            </p>
+                        </div>
+                        <div class="flex items-center space-x-6">
+                            <div class="text-center">
+                                <div class="text-2xl font-display font-bold text-champagne-gold">50+</div>
+                                <div class="text-sm text-deep-charcoal/60">Projects Led</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-display font-bold text-champagne-gold">5+</div>
+                                <div class="text-sm text-deep-charcoal/60">Years Experience</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-display font-bold text-champagne-gold">98%</div>
+                                <div class="text-sm text-deep-charcoal/60">Client Satisfaction</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="reveal-element">
+                    <div class="aspect-square rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-champagne-gold/20 to-sage-green/20 flex items-center justify-center">
+                        <div class="text-center p-8">
+                            <div class="w-32 h-32 bg-champagne-gold/30 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <svg class="w-16 h-16 text-champagne-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="font-display text-2xl font-semibold text-deep-charcoal mb-2">Melton N. Mathobela</h3>
+                            <p class="text-deep-charcoal/70">Creative Director</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Client Testimonials -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal-element">
+                <h2 class="font-display text-4xl lg:text-5xl font-bold text-deep-charcoal mb-6">
+                    What Our Clients Say
+                </h2>
+                <p class="text-xl text-deep-charcoal/70 max-w-3xl mx-auto">
+                    Don't just take our word for it. Here's what our clients have to say about working with us.
+                </p>
+            </div>
+            
+            <div class="splide" id="testimonial-slider">
+                <div class="splide__track">
+                    <ul class="splide__list">
+                        <li class="splide__slide">
+                            <div class="testimonial-card p-8 rounded-2xl border border-soft-taupe/20 text-center">
+                                <div class="w-16 h-16 bg-champagne-gold/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                                    <svg class="w-8 h-8 text-champagne-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                    </svg>
+                                </div>
+                                <blockquote class="text-lg text-deep-charcoal/80 mb-6 italic">
+                                    "Nelo Cafe Digital Studio transformed our online presence completely. The website they created 
+                                    for our salon not only looks stunning but has increased our bookings by 60%. Their attention 
+                                    to detail and luxury aesthetic is unmatched."
+                                </blockquote>
+                                <div class="font-semibold text-deep-charcoal">Sarah Johnson</div>
+                                <div class="text-champagne-gold">Owner, LuxeStrands Salon</div>
+                            </div>
+                        </li>
+                        <li class="splide__slide">
+                            <div class="testimonial-card p-8 rounded-2xl border border-soft-taupe/20 text-center">
+                                <div class="w-16 h-16 bg-sage-green/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                                    <svg class="w-8 h-8 text-sage-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                    </svg>
+                                </div>
+                                <blockquote class="text-lg text-deep-charcoal/80 mb-6 italic">
+                                    "Working with Melton was an absolute pleasure. He understood our vision for a luxury fashion 
+                                    boutique and delivered beyond our expectations. The e-commerce functionality is seamless 
+                                    and our customers love the new design."
+                                </blockquote>
+                                <div class="font-semibold text-deep-charcoal">Amanda Rodriguez</div>
+                                <div class="text-champagne-gold">Founder, Velora Boutique</div>
+                            </div>
+                        </li>
+                        <li class="splide__slide">
+                            <div class="testimonial-card p-8 rounded-2xl border border-soft-taupe/20 text-center">
+                                <div class="w-16 h-16 bg-champagne-gold/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                                    <svg class="w-8 h-8 text-champagne-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                    </svg>
+                                </div>
+                                <blockquote class="text-lg text-deep-charcoal/80 mb-6 italic">
+                                    "The website Nelo Cafe created for our restaurant perfectly captures our fine dining atmosphere. 
+                                    The reservation system has streamlined our operations, and the SEO optimization has brought 
+                                    us so many new customers. Highly recommended!"
+                                </blockquote>
+                                <div class="font-semibold text-deep-charcoal">Chef Pierre Dubois</div>
+                                <div class="text-champagne-gold">Owner, Maison Éclat Restaurant</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Call to Action -->
+    <section class="py-20 bg-deep-charcoal text-white">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="reveal-element">
+                <h2 class="font-display text-4xl lg:text-5xl font-bold mb-6">
+                    Ready to Work Together?
+                </h2>
+                <p class="text-xl text-warm-ivory/80 mb-8 max-w-2xl mx-auto">
+                    Let's create something extraordinary together. Get in touch to discuss how we can elevate your brand's digital presence.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="contact.html" class="bg-champagne-gold text-deep-charcoal px-8 py-4 rounded-lg font-medium text-lg hover:bg-champagne-gold/90 transition-all duration-300 inline-flex items-center justify-center">
+                        Start Your Project
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                        </svg>
+                    </a>
+                    <a href="services.html" class="border-2 border-warm-ivory text-warm-ivory px-8 py-4 rounded-lg font-medium text-lg hover:bg-warm-ivory hover:text-deep-charcoal transition-all duration-300 inline-flex items-center justify-center">
+                        Our Services
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-warm-ivory border-t border-soft-taupe/20 py-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center">
+                <div class="font-display font-semibold text-2xl text-deep-charcoal mb-4">
+                    Nelo Cafe Digital Studio
+                </div>
+                <p class="text-deep-charcoal/60 mb-6">
+                    Where design meets luxury — crafting digital spaces that inspire.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-8 text-sm text-deep-charcoal/60">
+                    <span>📍 Polokwane, South Africa</span>
+                    <span>📧 nelo3482@gmail.com</span>
+                    <span>📞 074 065 0953</span>
+                </div>
+                <div class="mt-8 pt-8 border-t border-soft-taupe/20 text-sm text-deep-charcoal/50">
+                    © 2025 Nelo Cafe Digital Studio. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Initialize scroll reveal
+        document.addEventListener('DOMContentLoaded', function() {
+            const revealElements = document.querySelectorAll('.reveal-element');
+            
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            
+            revealElements.forEach(element => {
+                revealObserver.observe(element);
+            });
+            
+            // Initialize testimonial slider
+            if (document.getElementById('testimonial-slider')) {
+                new Splide('#testimonial-slider', {
+                    type: 'loop',
+                    perPage: 1,
+                    perMove: 1,
+                    gap: '2rem',
+                    autoplay: true,
+                    interval: 5000,
+                    pauseOnHover: true,
+                    arrows: false,
+                    pagination: true
+                }).mount();
+            }
+        });
+    </script>
+</body>
+</html>
